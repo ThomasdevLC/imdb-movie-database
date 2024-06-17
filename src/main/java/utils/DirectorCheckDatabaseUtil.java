@@ -5,7 +5,7 @@ import entities.Country;
 import entities.Place;
 
 
-public class DatabaseUtil {
+public class DirectorCheckDatabaseUtil {
 	
 
 	public static Place findOrCreatePlace(EntityManager em, String state, String city, String countryName) {

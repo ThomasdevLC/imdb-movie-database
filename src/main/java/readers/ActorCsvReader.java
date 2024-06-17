@@ -11,7 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import utils.CsvFileUtil;
-import utils.DatabaseUtil;
+import utils.DirectorCheckDatabaseUtil;
 import utils.DateUtil;
 import utils.ActorHeightParserUtil;
 
@@ -48,7 +48,7 @@ public class ActorCsvReader {
 				String state = (placeDetails.length > 1 && !placeDetails[1].isEmpty()) ? placeDetails[1].trim() : null;
 				String countryName = (placeDetails.length > 2) ? placeDetails[2].trim() : null;
 
-				Place birthPlace = DatabaseUtil.findOrCreatePlace(em, state, city, countryName);
+				Place birthPlace = DirectorCheckDatabaseUtil.findOrCreatePlace(em, state, city, countryName);
 
 				Actor actor = new Actor(idActor, name, birthDate, birthPlace,height, url);
 				em.persist(actor);

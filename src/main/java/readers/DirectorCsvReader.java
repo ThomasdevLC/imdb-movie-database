@@ -9,7 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import utils.CsvFileUtil;
-import utils.DatabaseUtil;
+import utils.DirectorCheckDatabaseUtil;
 import utils.DateUtil;
 import entities.Director;
 import entities.Place;
@@ -28,8 +28,8 @@ public class DirectorCsvReader {
 			Path path = CsvFileUtil.getPath(fileName);
 
 			List<String> allLines = Files.readAllLines(path);
-//			List<String> dataLines = allLines.subList(1, Math.min(51, allLines.size()));
-			List<String> dataLines = allLines.subList(1, allLines.size());
+			List<String> dataLines = allLines.subList(1, Math.min(51, allLines.size()));
+//			List<String> dataLines = allLines.subList(1, allLines.size());
 
 			for (String line : dataLines) {
 				String[] col = line.split(";");
@@ -41,16 +41,29 @@ public class DirectorCsvReader {
 				String url = col[4].trim();
 
 				String[] placeDetails = placeInfo.split(",\\s*", 3);
-				String city = placeDetails[0].trim();
-				String state = (placeDetails.length > 1 && !placeDetails[1].isEmpty()) ? placeDetails[1].trim() : null;
-				String countryName = (placeDetails.length > 2) ? placeDetails[2].trim() : null;
+				
+				String city = null;
+				String state = null;
+				String countryName = null;
 
-				Place birthPlace = DatabaseUtil.findOrCreatePlace(em, state, city, countryName);
+				if (placeDetails.length == 3) {
+				    city = placeDetails[0].trim();
+				    state = placeDetails[1].trim();
+				    countryName = placeDetails[2].trim();
+				}
+
+				if (placeDetails.length == 2) {
+				    city = placeDetails[0].trim();
+				    countryName = placeDetails[1].trim();
+				}
+
+
+				Place birthPlace = DirectorCheckDatabaseUtil.findOrCreatePlace(em, city, state, countryName);
 
 				Director director = new Director(idDirector, name, birthDate, birthPlace, url);
 				em.persist(director);
 
-				System.out.println("Persisting director: " + director.getName());
+				System.out.println(" director: " + director.getName() );
 
 			}
 
