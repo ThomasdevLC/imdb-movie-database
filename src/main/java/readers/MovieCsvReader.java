@@ -12,130 +12,72 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import utils.CsvFileUtil;
+import utils.MovieCheckDatabaseUtils;
 import utils.MovieCountryUtil;
 import utils.MovieRatingParserUtil;
-
+import utils.MovieYearParserUtil;
 
 public class MovieCsvReader {
 
-    public static void main(String[] args) {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+	public static void main(String[] args) {
+		EntityManagerFactory emf = null;
+		EntityManager em = null;
 
-        try {
-            emf = Persistence.createEntityManagerFactory("movie_database");
-            em = emf.createEntityManager();
+		try {
+			emf = Persistence.createEntityManagerFactory("movie_database");
+			em = emf.createEntityManager();
 
-            String fileName = "films.csv";
-            Path path = CsvFileUtil.getPath(fileName);
+			String fileName = "films.csv";
+			Path path = CsvFileUtil.getPath(fileName);
 
-            List<String> allLines = Files.readAllLines(path);
-            List<String> dataLines = allLines.subList(1, Math.min(3001, allLines.size()));
+			List<String> allLines = Files.readAllLines(path);
+			List<String> dataLines = allLines.subList(1, Math.min(3001, allLines.size()));
 
-            em.getTransaction().begin();
+			em.getTransaction().begin();
 
-            for (String line : dataLines) {
-                String[] col = line.split(";");
+			for (String line : dataLines) {
+				String[] col = line.split(";");
 
-                String idMovie = col[0].trim();
-                String name = col[1].trim();
-                int year = parseYear(col[2].trim());
-                double rating = MovieRatingParserUtil.parseRating(col[3].trim()); 
-                String url = col[4].trim();
-                String genreString = col[6].trim(); 
-                String languageName = col[7].trim();
-                String synopsis = col.length > 8 ? col[8].trim() : "";  
-                String countryName = col.length > 9 ? MovieCountryUtil.checkCountryFormat(col[9].trim()) : "";
+				String idMovie = col[0].trim();
+				String name = col[1].trim();
+                int year = MovieYearParserUtil.parseYear(col[2].trim()); 
+				double rating = MovieRatingParserUtil.parseRating(col[3].trim());
+				String url = col[4].trim();
+				String genreString = col[6].trim();
+				String languageName = col[7].trim();
+				String synopsis = col.length > 8 ? col[8].trim() : "";
+				String countryName = col.length > 9 ? MovieCountryUtil.checkCountryFormat(col[9].trim()) : "";
 
-                Country country = null;
-                if (!countryName.isEmpty()) {
-                    country = findOrCreateCountry(em, countryName);
-                }
+				Country country = null;
+				if (!countryName.isEmpty()) {
+					country = MovieCheckDatabaseUtils.findOrCreateCountry(em, countryName);
+				}
 
-                Language language = findOrCreateLanguage(em, languageName);
-                
-                Movie movie = new Movie(idMovie, name, year, rating, url, language, synopsis, country);
-                em.persist(movie);
+				Language language = MovieCheckDatabaseUtils.findOrCreateLanguage(em, languageName);
 
-                List<String> genreNames = Arrays.asList(genreString.split(","));
-                for (String genreName : genreNames) {
-                    Genre genre = findOrCreateGenre(em, genreName.trim());
-                    if (genre != null) {
-                        movie.getGenres().add(genre);
-                    }
-                }
+				Movie movie = new Movie(idMovie, name, year, rating, url, language, synopsis, country);
+				em.persist(movie);
 
-             
-                System.out.println("Persisting movie: " + movie.getName());
-            }
+				List<String> genreNames = Arrays.asList(genreString.split(","));
+				for (String genreName : genreNames) {
+					Genre genre = MovieCheckDatabaseUtils.findOrCreateGenre(em, genreName.trim());
+					if (genre != null) {
+						movie.getGenres().add(genre);
+					}
+				}
 
-            em.getTransaction().commit();
+				System.out.println(" movie: " + movie.getName());
+			}
 
-        } catch (Exception e) {
-            if (em != null && em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
-        }
-    }
+			em.getTransaction().commit();
 
-    private static int parseYear(String yearStr) {
-        String[] parts = yearStr.split("\\D+");
-        return Integer.parseInt(parts[parts.length - 1]);
-    }
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			System.out.println("Error : " + e.getMessage());
+		} finally {
+			em.close();
+			emf.close();
+		}
+	}
 
-    private static Language findOrCreateLanguage(EntityManager em, String languageName) {
-        Language language = em.createQuery("SELECT l FROM Language l WHERE l.name = :name", Language.class)
-                .setParameter("name", languageName)
-                .getResultStream()
-                .findFirst()
-                .orElse(null);
-
-        if (language == null) {
-            language = new Language(languageName);
-            em.persist(language);
-        }
-
-        return language;
-    }
-
-    private static Country findOrCreateCountry(EntityManager em, String countryName) {
-        Country country = em.createQuery("SELECT c FROM Country c WHERE c.name = :name", Country.class)
-                .setParameter("name", countryName)
-                .getResultStream()
-                .findFirst()
-                .orElse(null);
-
-        if (country == null) {
-            country = new Country(countryName);
-            em.persist(country);
-        }
-
-        return country;
-    }
-
-    private static Genre findOrCreateGenre(EntityManager em, String genreName) {
-        Genre genre = em.createQuery("SELECT g FROM Genre g WHERE g.name = :name", Genre.class)
-                .setParameter("name", genreName)
-                .getResultStream()
-                .findFirst()
-                .orElse(null);
-
-        if (genre == null) {
-            genre = new Genre(genreName);
-            em.persist(genre);
-        }
-
-        return genre;
-    }
 }
-
-

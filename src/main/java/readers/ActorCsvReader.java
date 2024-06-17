@@ -53,7 +53,7 @@ public class ActorCsvReader {
 				Actor actor = new Actor(idActor, name, birthDate, birthPlace,height, url);
 				em.persist(actor);
 
-				System.out.println("Persisting actor: " + actor.getName());
+				System.out.println(" actor: " + actor.getName());
 
 			}
 

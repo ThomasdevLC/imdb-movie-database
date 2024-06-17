@@ -47,7 +47,6 @@ public class UserInterface {
             displayMenu();
             System.out.print("Entrez votre choix: ");
             
-            // Lire l'entrée utilisateur avec gestion des exceptions
             try {
                 option = Integer.parseInt(scanner.nextLine().trim()); 
             } catch (NumberFormatException e) {
@@ -57,6 +56,7 @@ public class UserInterface {
 
             switch (option) {
                 case 1:
+                	//exemple : martin sheen
                     System.out.print("Entrez le nom de l'acteur: ");
                     String actorName = scanner.nextLine();
                     List<Movie> moviesForActor = movieDAO.findMoviesByActorName(actorName);
@@ -89,6 +89,7 @@ public class UserInterface {
                     break;
 
                 case 4:
+                	//exemple Robert De Niro  + Edward Norton
                     System.out.print("Entrez le nom du premier acteur: ");
                     String actorName1 = scanner.nextLine();
                     System.out.print("Entrez le nom du deuxième acteur: ");
