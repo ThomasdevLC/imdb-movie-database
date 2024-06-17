@@ -25,7 +25,9 @@ public class MovieActorCsvReader {
             Path path = CsvFileUtil.getPath(fileName);
 
             List<String> allLines = Files.readAllLines(path);
-            List<String> dataLines = allLines.subList(1, Math.min(51, allLines.size())); 
+//            List<String> dataLines = allLines.subList(1, Math.min(51, allLines.size())); 
+			List<String> dataLines = allLines.subList(1, allLines.size());
+
             for (String line : dataLines) {
                 String[] col = line.split(";");
 

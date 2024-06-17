@@ -26,7 +26,8 @@ public class MovieDirectorCsvReader {
 			Path path = CsvFileUtil.getPath(fileName);
 
 			List<String> allLines = Files.readAllLines(path);
-			List<String> dataLines = allLines.subList(1, Math.min(51, allLines.size()));
+//			List<String> dataLines = allLines.subList(1, Math.min(51, allLines.size()));
+			List<String> dataLines = allLines.subList(1, allLines.size());
 
 			for (String line : dataLines) {
 				String[] col = line.split(";");
@@ -52,7 +53,7 @@ public class MovieDirectorCsvReader {
 					// Mettre à jour l'entité Movie pour persister l'association
 					em.merge(movie);
 				} else {
-					System.out.println("Movie or Director not found or created for idMovie: " + idMovie
+					System.out.println(" idMovie: " + idMovie
 							+ ", idDirector: " + idDirector);
 				}
 			}

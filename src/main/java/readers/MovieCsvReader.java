@@ -12,6 +12,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import utils.CsvFileUtil;
+import utils.MovieCountryUtil;
+import utils.MovieRatingParserUtil;
 
 
 public class MovieCsvReader {
@@ -28,7 +30,7 @@ public class MovieCsvReader {
             Path path = CsvFileUtil.getPath(fileName);
 
             List<String> allLines = Files.readAllLines(path);
-            List<String> dataLines = allLines.subList(1, Math.min(51, allLines.size()));
+            List<String> dataLines = allLines.subList(1, Math.min(3001, allLines.size()));
 
             em.getTransaction().begin();
 
@@ -38,12 +40,12 @@ public class MovieCsvReader {
                 String idMovie = col[0].trim();
                 String name = col[1].trim();
                 int year = parseYear(col[2].trim());
-                double rating = col[3].trim().isEmpty() ? 0.0 : Double.parseDouble(col[3].trim());
+                double rating = MovieRatingParserUtil.parseRating(col[3].trim()); 
                 String url = col[4].trim();
                 String genreString = col[6].trim(); 
                 String languageName = col[7].trim();
-                String synopsis = col[8].trim();
-                String countryName = col.length > 9 ? col[9].trim() : "";
+                String synopsis = col.length > 8 ? col[8].trim() : "";  
+                String countryName = col.length > 9 ? MovieCountryUtil.checkCountryFormat(col[9].trim()) : "";
 
                 Country country = null;
                 if (!countryName.isEmpty()) {

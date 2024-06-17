@@ -11,9 +11,8 @@ import jakarta.persistence.Persistence;
 import queries.MovieDao;
 import queries.MovieDaoImpl;
 
-
 public class UserInterface {
-    
+
     private EntityManagerFactory emf;
     private EntityManager em;
     private MovieDao movieDAO;
@@ -43,12 +42,18 @@ public class UserInterface {
     }
 
     public void userSelection() {
-        int option;
+        int option = -1;
         do {
             displayMenu();
             System.out.print("Entrez votre choix: ");
-            option = scanner.nextInt();
-            scanner.nextLine();  // Consomme le reste de la ligne
+            
+            // Lire l'entrée utilisateur avec gestion des exceptions
+            try {
+                option = Integer.parseInt(scanner.nextLine().trim()); 
+            } catch (NumberFormatException e) {
+                System.out.println("Veuillez entrer un numéro correspondant à une option du menu.");
+                continue;  
+            }
 
             switch (option) {
                 case 1:
@@ -73,10 +78,9 @@ public class UserInterface {
 
                 case 3:
                     System.out.print("Entrez l'année de début: ");
-                    int year1 = scanner.nextInt();
+                    int year1 = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Entrez l'année de fin: ");
-                    int year2 = scanner.nextInt();
-                    scanner.nextLine();  // Consomme le reste de la ligne
+                    int year2 = Integer.parseInt(scanner.nextLine().trim());
                     List<Movie> releasedMovies = movieDAO.findMoviesBetweenTwoYears(year1, year2);
                     System.out.println("Films réalisés entre " + year1 + " et " + year2 + ":");
                     for (Movie movie : releasedMovies) {
@@ -110,10 +114,9 @@ public class UserInterface {
 
                 case 6:
                     System.out.print("Entrez l'année de début: ");
-                    int yearOne = scanner.nextInt();
+                    int yearOne = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Entrez l'année de fin: ");
-                    int yearTwo = scanner.nextInt();
-                    scanner.nextLine();  // Consomme le reste de la ligne
+                    int yearTwo = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Entrez le nom de l'acteur: ");
                     String actor = scanner.nextLine();
                     List<Movie> releasedMoviesByPeriodByActor = movieDAO.findMoviesBetweenTwoYearsbyActor(yearOne, yearTwo, actor);

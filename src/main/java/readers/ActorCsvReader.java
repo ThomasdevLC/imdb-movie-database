@@ -13,6 +13,7 @@ import jakarta.persistence.Persistence;
 import utils.CsvFileUtil;
 import utils.DatabaseUtil;
 import utils.DateUtil;
+import utils.ActorHeightParserUtil;
 
 public class ActorCsvReader {
 	
@@ -29,7 +30,7 @@ public class ActorCsvReader {
 			Path path = CsvFileUtil.getPath(fileName);
 
 			List<String> allLines = Files.readAllLines(path);
-			List<String> dataLines = allLines.subList(1, Math.min(51, allLines.size()));
+			List<String> dataLines = allLines.subList(1, Math.min(5001, allLines.size()));
 
 			for (String line : dataLines) {
 				String[] col = line.split(";");
@@ -39,13 +40,7 @@ public class ActorCsvReader {
 				LocalDate birthDate = DateUtil.parseDate(col[2].trim());
 				String placeInfo = col[3].trim();
 				String heightStr = col[4].trim(); 
-				double height;
-				    if (heightStr.isEmpty()) {
-				        height = 0.0; 
-				    } else {
-				        String[] parts = heightStr.split("\\s+");  
-				        height = Double.parseDouble(parts[0]);  
-				    }
+                double height = ActorHeightParserUtil.parseHeight(heightStr);
 				String url = col[5].trim();
 
 				String[] placeDetails = placeInfo.split(",\\s*", 3);

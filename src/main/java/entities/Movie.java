@@ -31,7 +31,7 @@ public class Movie {
 	@ManyToOne
 	@JoinColumn(name = "id_language")
 	private Language language;
-	@Column(name = "synopsis", length = 1000)
+	@Column(name = "synopsis", length = 2000)
 	private String synopsis;
 	@ManyToOne
 	@JoinColumn(name = "id_country")
