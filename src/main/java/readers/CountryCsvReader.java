@@ -1,5 +1,6 @@
 package readers;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
@@ -17,13 +18,8 @@ import entities.Country;
  * de données.
  */
 public class CountryCsvReader {
-	
-	/**
-	 * Méthode principale qui lit le fichier CSV des pays et les persiste dans la
-	 * base de données.
-	 */
-	
-	public static void main(String[] args) {
+
+	public void extractCountries() {
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_database");
 		EntityManager em = emf.createEntityManager();
@@ -56,16 +52,13 @@ public class CountryCsvReader {
 
 			em.getTransaction().commit();
 
-		} catch (Exception e) {
-
+		} catch (IOException e) {
+			e.printStackTrace();
 			em.getTransaction().rollback();
 
-			System.out.println("Error : " + e.getMessage());
 		} finally {
-
 			em.close();
 			emf.close();
-
 		}
 	}
 }

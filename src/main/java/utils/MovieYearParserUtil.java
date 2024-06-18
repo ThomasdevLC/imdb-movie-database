@@ -1,11 +1,24 @@
 package utils;
 
+/**
+ * Classe utilitaire pour l'analyse des années de sortie des films.
+ *
+ * Classe fournit une méthode  pour extraire une année à partir de chaînes de caracteres,
+ * Utilisée dans la classe {@link MovieCsvReader} pour le traitement des années de sortie des films.
+
+ */
 public class MovieYearParserUtil {
 
-	
-	public static int parseYear(String yearStr) {
+    /**
+     * Méthode sépare la chaîne en  (parts) et convertit en entier le dernier morceau(parts.length - 1).
+     *
+     * @param yearStr l'année de type String.
+     * @return L'année sous forme d'entier Integer.
+     * @throws NumberFormatException Si la chaîne ne contient pas de chiffres valides.
+     */
+    public static int parseYear(String yearStr) {
         String[] parts = yearStr.split("\\D+");
+        
         return Integer.parseInt(parts[parts.length - 1]);
     }
-	
 }

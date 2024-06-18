@@ -1,6 +1,8 @@
 package readers;
 
+import java.io.IOException;
 import java.nio.file.Files;
+
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,9 +17,14 @@ import utils.DirectorCheckDatabaseUtil;
 import utils.DateUtil;
 import utils.ActorHeightParserUtil;
 
+/**
+ * classe lit un fichier CSV contenant des noms d'acteurs et les persiste en base
+ * de données.
+ */
+
 public class ActorCsvReader {
 	
-	public static void main(String[] args) {
+	public void extractActors() {
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_database");
 		EntityManager em = emf.createEntityManager();
@@ -59,13 +66,13 @@ public class ActorCsvReader {
 
 			em.getTransaction().commit();
 
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			System.out.println("Error : " + e.getMessage());
-		} finally {
-			em.close();
-			emf.close();
-		}
-	}
-
+	       } catch (IOException e) {
+	            e.printStackTrace();
+	            em.getTransaction().rollback();
+	            
+	        } finally {
+				em.close();
+				emf.close();
+	        }
+	    }
 }

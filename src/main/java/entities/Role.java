@@ -12,7 +12,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-
+/**
+ * Classe  représentant un rôle.
+ */
 @Entity
 @Table(name = "role")
 public class Role {
@@ -26,14 +28,29 @@ public class Role {
 	@Column(name = "id_actor")
 	private String idActor;
 	private String name;
-
+	 
+	/** 
+     * Liste des films associés à ce rôle.
+     */
 	@ManyToMany
 	@JoinTable(name = "movie_role", joinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id_role"), inverseJoinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"))
 	private List<Movie> movies;
-	
+
+	 /** 
+     * Liste des acteurs associés à ce rôle.
+     */
 	@ManyToMany
 	@JoinTable(name = "actor_role", joinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id_role"), inverseJoinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id_actor"))
 	private List<Actor> actors;
+	
+	
+	 /**
+     * Constructeur pour créer un nouvel objet Role.
+     *
+     * @param idMovie Identifiant du film.
+     * @param idActor Identifiant de l'acteur.
+     * @param name Nom du rôle.
+     */
 
 	public Role(String idMovie, String idActor, String name) {
 		super();

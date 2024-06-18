@@ -1,10 +1,10 @@
 package readers;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -13,10 +13,13 @@ import utils.DirectorCheckDatabaseUtil;
 import utils.DateUtil;
 import entities.Director;
 import entities.Place;
-
+/**
+ * classe lit un fichier CSV contenant des noms de réalisateurs et les persiste en base
+ * de données.
+ */
 public class DirectorCsvReader {
 
-	public static void main(String[] args) {
+	public  void extractDirectors() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_database");
 		EntityManager em = emf.createEntityManager();
 
@@ -28,8 +31,8 @@ public class DirectorCsvReader {
 			Path path = CsvFileUtil.getPath(fileName);
 
 			List<String> allLines = Files.readAllLines(path);
-			List<String> dataLines = allLines.subList(1, Math.min(51, allLines.size()));
-//			List<String> dataLines = allLines.subList(1, allLines.size());
+//			List<String> dataLines = allLines.subList(1, Math.min(51, allLines.size()));
+			List<String> dataLines = allLines.subList(1, allLines.size());
 
 			for (String line : dataLines) {
 				String[] col = line.split(";");
@@ -69,13 +72,13 @@ public class DirectorCsvReader {
 
 			em.getTransaction().commit();
 
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			System.out.println("Error : " + e.getMessage());
-		} finally {
-			em.close();
-			emf.close();
-		}
+	       } catch (IOException e) {
+	            e.printStackTrace();
+	            em.getTransaction().rollback();
+	            
+	        } finally {
+				em.close();
+				emf.close();
+	        }
+	    }
 	}
-
-}

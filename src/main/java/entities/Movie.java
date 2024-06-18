@@ -14,9 +14,13 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Classe entité représentant un film.
+ */
 @Entity
 @Table(name = "movie")
 public class Movie {
+	/** Identifiant unique du film. */
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,27 +41,43 @@ public class Movie {
 	@JoinColumn(name = "id_country")
 	private Country country;
 
-	   @ManyToOne
-	    @JoinColumn(name = "id_director")
-	    private Director director;
-	
+	/** Liste des genres du film. */
 	@ManyToMany
 	@JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_genre", referencedColumnName = "id"))
 	private List<Genre> genres;
 
+	/** Liste des rôles dans le film. */
 	@ManyToMany
 	@JoinTable(name = "movie_role", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id_role"))
 	private List<Role> roles;
 
+	/** Liste des lieux associés au film. */
 	@ManyToMany
 	@JoinTable(name = "movie_place", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_place", referencedColumnName = "id"))
 	private List<Place> places;
 
-
+	/** Liste des acteurs dans le film. */
 	@ManyToMany
 	@JoinTable(name = "movie_actor", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id_actor"))
 	private List<Actor> actors;
 
+	/** Liste des réalisateurs du film. */
+	@ManyToMany
+	@JoinTable(name = "movie_director", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_director", referencedColumnName = "id_director"))
+	private List<Director> directors;
+
+	/**
+	 * Constructeur pour créer un nouvel objet Movie avec ses attributs .
+	 *
+	 * @param idMovie  Identifiant du film.
+	 * @param name     Nom du film.
+	 * @param year     Année de sortie du film.
+	 * @param rating   Note du film.
+	 * @param url      URL du film.
+	 * @param language Langue du film.
+	 * @param synopsis Synopsis du film.
+	 * @param country  Pays d'origine du film.
+	 */
 	public Movie(String idMovie, String name, int year, double rating, String url, Language language, String synopsis,
 			Country country) {
 		super();
@@ -71,9 +91,12 @@ public class Movie {
 		this.country = country;
 		this.genres = new ArrayList<>();
 		this.places = new ArrayList<>();
-		
+
 	}
 
+	/**
+	 * Constructeur par défaut.
+	 */
 	public Movie() {
 		super();
 	}
@@ -161,7 +184,6 @@ public class Movie {
 	public List<Place> getPlaces() {
 		return places;
 	}
-
 
 	/**
 	 * @return the actors
@@ -254,8 +276,6 @@ public class Movie {
 		this.places = places;
 	}
 
-
-
 	/**
 	 * @param actors the actors to set
 	 */
@@ -263,26 +283,19 @@ public class Movie {
 		this.actors = actors;
 	}
 
+	/**
+	 * @return the directors
+	 */
+	public List<Director> getdirectors() {
+		return directors;
+	}
+
 	@Override
 	public String toString() {
 		return "Movie [id=" + id + ", idMovie=" + idMovie + ", name=" + name + ", year=" + year + ", rating=" + rating
 				+ ", url=" + url + ", language=" + language + ", synopsis=" + synopsis + ", country=" + country
-				+ ", genres=" + genres + ", roles=" + roles + ", places=" + places + ", directors=" + director
+				+ ", genres=" + genres + ", roles=" + roles + ", places=" + places + ", directors=" + directors
 				+ ", actors=" + actors + "]";
-	}
-
-	/**
-	 * @return the director
-	 */
-	public Director getDirector() {
-		return director;
-	}
-
-	/**
-	 * @param director the director to set
-	 */
-	public void setDirector(Director director) {
-		this.director = director;
 	}
 
 }

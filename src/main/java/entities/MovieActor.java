@@ -1,10 +1,13 @@
 package entities;
 
 import jakarta.persistence.*;
-
+/**
+ * Classe entité représentant la relation entre un film et un acteur.
+ */
 @Entity
 @Table(name = "movie_actor")
 public class MovieActor {
+    /** Identifiant unique de la relation entre le film et l'acteur. */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +21,12 @@ public class MovieActor {
 
     public MovieActor() {
     }
-
+    /**
+     * Constructeur pour créer un nouvel objet MovieActor.
+     *
+     * @param idMovie Identifiant du film.
+     * @param idActor Identifiant de l'acteur.
+     */
     public MovieActor(String idMovie, String idActor) {
         this.idMovie = idMovie;
         this.idActor = idActor;

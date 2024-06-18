@@ -10,9 +10,13 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import utils.CsvFileUtil;
 
+/**
+ * classe lit un fichier CSV contenant des noms de films liés à leurs acteurs  et les persiste en base
+ * de données.
+ */
 public class MovieActorCsvReader {
 
-    public static void main(String[] args) {
+    public void extractMovieActors() {
     	
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_database");
         EntityManager em = emf.createEntityManager();
@@ -43,23 +47,15 @@ public class MovieActorCsvReader {
                 System.out.println(" actor " + idActor + " movie " + idMovie);
             }
 
-            // Commit de la transaction
             em.getTransaction().commit();
 
         } catch (IOException e) {
             e.printStackTrace();
-            // Rollback en cas d'erreur
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
+            em.getTransaction().rollback();
+            
         } finally {
-            // Fermeture des ressources
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
+			em.close();
+			emf.close();
         }
     }
 }

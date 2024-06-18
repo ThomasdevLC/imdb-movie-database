@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import entities.Director;
-import entities.Movie;
+import entities.MovieDirector;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -13,7 +12,11 @@ import utils.CsvFileUtil;
 
 public class MovieDirectorCsvReader {
 
-	public static void main(String[] args) {
+	/**
+	 * classe lit un fichier CSV contenant des noms de films liés à leurs realisteurs  et les persiste en base
+	 * de données.
+	 */
+	public void extractMovieDirectors() {
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_database");
 		EntityManager em = emf.createEntityManager();
@@ -35,46 +38,23 @@ public class MovieDirectorCsvReader {
 				String idMovie = col[0].trim();
 				String idDirector = col[1].trim();
 
-				// Chercher le film par son idMovie
-				Movie movie = em.createQuery("SELECT m FROM Movie m WHERE m.idMovie = :idMovie", Movie.class)
-						.setParameter("idMovie", idMovie).getResultList().stream().findFirst().orElse(null);
+		
+				MovieDirector movieDirector = new MovieDirector(idMovie, idDirector);
 
-				// Chercher le réalisateur par son idDirector
-				  Director director = em.createQuery("SELECT d FROM Director d WHERE d.idDirector = :idDirector", Director.class)
-                          .setParameter("idDirector", idDirector)
-                          .getResultList()
-                          .stream()
-                          .findFirst()
-                          .orElse(null);
-				  
-				if (movie != null && director != null) {
-					// Associer le réalisateur au film
-					movie.setDirector(director);
-					// Mettre à jour l'entité Movie pour persister l'association
-					em.merge(movie);
-				} else {
-					System.out.println(" idMovie: " + idMovie
-							+ ", idDirector: " + idDirector);
-				}
-			}
+	                em.persist(movieDirector);
 
-			// Commit de la transaction
+	                System.out.println(" director " + idDirector + " movie " + idMovie);
+	            }
+
 			em.getTransaction().commit();
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			// Rollback en cas d'erreur
-			if (em.getTransaction().isActive()) {
-				em.getTransaction().rollback();
-			}
-		} finally {
-			// Fermeture des ressources
-			if (em != null) {
+	       } catch (IOException e) {
+	            e.printStackTrace();
+	            em.getTransaction().rollback();
+	            
+	        } finally {
 				em.close();
-			}
-			if (emf != null) {
 				emf.close();
-			}
-		}
+	        }
+	    }
 	}
-}

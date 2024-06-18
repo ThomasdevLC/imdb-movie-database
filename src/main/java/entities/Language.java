@@ -8,7 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
+/**
+ * Classe  représentant une langue.
+ */
 @Entity
 @Table(name = "language")
 public class Language {
@@ -16,15 +18,24 @@ public class Language {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-
+	
+	 /** 
+     * Liste des films associés à une langue.
+     */
 	@OneToMany(mappedBy = "language")
 	private List<Movie> movies;
 
+	/**
+     * Constructeur pour créer un nouvel objet Langue avec le nom donné.
+     * @param name Le nom de la langue.
+     */
 	public Language(String name) {
 		super();
 		this.name = name;
 	}
-
+	 /**
+     * Constructeur par défaut.
+     */
 	public Language() {
 	}
 	/**

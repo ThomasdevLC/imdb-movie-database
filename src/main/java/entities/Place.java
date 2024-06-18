@@ -13,9 +13,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**
+ * Classe  représentant un lieu.
+ */
 @Entity
 @Table(name = "place")
 public class Place {
+    /** Identifiant unique du lieu. */
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,28 +27,50 @@ public class Place {
 
 	private String city;
 	private String state;
-
+	
+	 /** 
+     *  Pays associé à ce lieu.
+     */
 	@ManyToOne
 	@JoinColumn(name = "id_country")
 	private Country country;
 
+	 /** 
+     * Liste des films associés à ce lieu.
+     */
 	@ManyToMany
 	@JoinTable(name = "movie_place", joinColumns = @JoinColumn(name = "id_place", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"))
 	private List<Movie> movies;
-
+	
+	 /** 
+     * Liste des réalisateurs associés à ce lieu.
+     */
 	@OneToMany(mappedBy = "birthPlace")
 	private List<Director> directors;
-
+	
+	 /** 
+     * Liste des acteurs associés à ce lieu.
+     */
 	@OneToMany(mappedBy = "birthPlace")
 	private List<Actor> actors;
 
+	 /**
+     * Constructeur pour créer un nouvel objet Place.
+     * @param city Le nom de la ville.
+     * @param state Le nom de la région ou état.
+     * @param country Le nom du pays.
+
+     */
 	public Place(String city, String state, Country country) {
 		super();
 		this.city = city;
 		this.state = state;
 		this.country = country;
 	}
-
+	
+	/**
+     * Constructeur par défaut.
+     */
 	public Place() {
 		super();
 	}

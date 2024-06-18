@@ -19,17 +19,15 @@ public class UserInterface {
     private Scanner scanner;
 
     public UserInterface() {
-        // Initialisation de l'EntityManagerFactory et de l'EntityManager
         emf = Persistence.createEntityManagerFactory("movie_database");
         em = emf.createEntityManager();
-        // Initialisation de MovieDao avec l'EntityManager
+        
         movieDAO = new MovieDaoImpl(em);
-        // Initialisation du Scanner pour lire les entrées utilisateur
+        
         scanner = new Scanner(System.in);
     }
 
     public void displayMenu() {
-        // Affiche le menu des options à l'utilisateur
         System.out.println("");
         System.out.println("Choisissez une option:");
         System.out.println("1. Trouver des films par le nom de l'acteur");
@@ -38,6 +36,8 @@ public class UserInterface {
         System.out.println("4. Trouver des films communs à deux acteurs");
         System.out.println("5. Trouver des acteurs communs à deux films");
         System.out.println("6. Trouver des films d'un acteur sortis entre deux années");
+        System.out.println("7. Trouver des films par le nom d'un réalisateur ");
+
         System.out.println("0. Quitter");
     }
 
@@ -45,7 +45,7 @@ public class UserInterface {
         int option = -1;
         do {
             displayMenu();
-            System.out.print("Entrez votre choix: ");
+            System.out.print("Saisir votre choix: ");
             
             try {
                 option = Integer.parseInt(scanner.nextLine().trim()); 
@@ -60,13 +60,14 @@ public class UserInterface {
                     System.out.print("Entrez le nom de l'acteur: ");
                     String actorName = scanner.nextLine();
                     List<Movie> moviesForActor = movieDAO.findMoviesByActorName(actorName);
-                    System.out.println("Films pour l'acteur " + actorName + ":");
+                    System.out.println("Films de l'acteur " + actorName + ":");
                     for (Movie movie : moviesForActor) {
                         System.out.println(movie.getName());
                     }
                     break;
 
                 case 2:
+                	//exemple : galactica
                     System.out.print("Entrez le nom du film: ");
                     String movieName = scanner.nextLine();
                     List<Actor> actorsForMovie = movieDAO.findActorsByMovieName(movieName);
@@ -77,6 +78,7 @@ public class UserInterface {
                     break;
 
                 case 3:
+                	//exemple : Craig Wasson  +  Alice Krige
                     System.out.print("Entrez l'année de début: ");
                     int year1 = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Entrez l'année de fin: ");
@@ -123,10 +125,21 @@ public class UserInterface {
                     List<Movie> releasedMoviesByPeriodByActor = movieDAO.findMoviesBetweenTwoYearsbyActor(yearOne, yearTwo, actor);
                     System.out.println("Films réalisés entre " + yearOne + " et " + yearTwo + " avec " + actor + ":");
                     for (Movie movie : releasedMoviesByPeriodByActor) {
-                        System.out.println(movie.getName() + " " + movie.getYear());
+                        System.out.println(movie.getName() + " - " + movie.getYear());
                     }
                     break;
 
+                case 7:
+                	//exemple : Lewin Webb
+                	System.out.print("Entrez le nom du directeur: ");
+                    String directorName = scanner.nextLine();
+                    List<Movie> moviesForDirector = movieDAO.findMoviesByDirectorName(directorName);
+                    System.out.println("Films du réalisateur " + directorName + ":");
+                    for (Movie movie : moviesForDirector) {
+                        System.out.println(movie.getName());
+                    }
+                    break;
+                    
                 case 0:
                     System.out.println("Quitter l'application.");
                     break;
@@ -136,7 +149,6 @@ public class UserInterface {
             }
         } while (option != 0);
 
-        // Fermeture des ressources
         em.close();
         emf.close();
         scanner.close();

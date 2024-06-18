@@ -8,33 +8,55 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**
+ * Classe entité représentant un réalisateur.
+ */
 @Entity
 @Table(name = "director")
 public class Director {
-
+    /** Identifiant unique du réalisateur. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+    /** Identifiant du réalisateur. */
 
 	@Column(name = "id_director")
 	private String idDirector;
+    
+	/** Nom du réalisateur. */
 	private String name;
+	
+    /** Date de naissance du réalisateur. */
 	@Column(name = "birth_date")
 	private LocalDate birthDate;
-//	@Column(name = "birth_place")
+	
+    /** Lieu de naissance du réalisateur. */
 	@ManyToOne
 	@JoinColumn(name = "id_place")
 	private Place birthPlace;
+	
+    /** URL de la page web du du réalisateur. */
 	private String url;
 
-
-	@OneToMany(mappedBy = "director")
+    /** Liste des films réalisés par ce réalisateur. */
+	@ManyToMany
+	@JoinTable(name = "movie_director", joinColumns = @JoinColumn(name = "id_director", referencedColumnName = "id_director"), inverseJoinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"))
 	private List<Movie> movies;
 
+	  /**
+     * Constructeur pour créer un nouvel objet Director avec ses attributs.
+     *
+     * @param idDirector Identifiant du réalisateur.
+     * @param name Nom du réalisateur.
+     * @param birthDate Date de naissance du réalisateur.
+     * @param birthPlace Lieu de naissance du réalisateur.
+     * @param url URL de la page web ou du profil du réalisateur.
+     */
 	public Director(String idDirector, String name, LocalDate birthDate, Place birthPlace, String url) {
 		super();
 		this.idDirector = idDirector;
@@ -43,6 +65,10 @@ public class Director {
 		this.birthPlace = birthPlace;
 		this.url = url;
 	}
+	
+	 /**
+     * Constructeur par défaut.
+     */
 
 	public Director() {
 		super();

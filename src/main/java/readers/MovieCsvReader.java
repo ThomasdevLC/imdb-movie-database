@@ -1,5 +1,6 @@
 package readers;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -17,9 +18,13 @@ import utils.MovieCountryUtil;
 import utils.MovieRatingParserUtil;
 import utils.MovieYearParserUtil;
 
+/**
+ * classe lit un fichier CSV contenant des noms de films et les persiste en base
+ * de données.
+ */
 public class MovieCsvReader {
 
-	public static void main(String[] args) {
+	public  void extractMovies() {
 		EntityManagerFactory emf = null;
 		EntityManager em = null;
 
@@ -66,18 +71,18 @@ public class MovieCsvReader {
 					}
 				}
 
-				System.out.println(" movie: " + movie.getName());
+				System.out.println(" movie : " + movie.getName());
 			}
 
 			em.getTransaction().commit();
 
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			System.out.println("Error : " + e.getMessage());
-		} finally {
-			em.close();
-			emf.close();
-		}
+	       } catch (IOException e) {
+	            e.printStackTrace();
+	            em.getTransaction().rollback();
+	            
+	        } finally {
+				em.close();
+				emf.close();
+	        }
+	    }
 	}
-
-}

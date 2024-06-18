@@ -9,59 +9,75 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+
+/**
+ * Classe utilitaire pour le traitement des dates de naissance des acteurs et réalisateurs.
+ * classe founrnit des méthodes pour parser des chaînes de date et les convertir en objets LocalDate.
+ * Utilisé dans la classe {@link ActorCsvReader} {@link DirectorCsvReader} .
+ */
+
 public class DateUtil {
 
-    // Define formatter for year-only, which defaults to January 1st
     private static final DateTimeFormatter YEAR_ONLY_FORMATTER =
             new DateTimeFormatterBuilder()
                     .appendPattern("yyyy")
                     .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
                     .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
-                    .toFormatter(Locale.ENGLISH); // Locale doesn't matter for year-only
+                    .toFormatter(Locale.ENGLISH); 
 
-    // Define formatters for full dates in English and French
     private static final DateTimeFormatter FULL_DATE_FORMATTER_EN =
             DateTimeFormatter.ofPattern("MMMM d yyyy", Locale.ENGLISH);
 
     private static final DateTimeFormatter FULL_DATE_FORMATTER_FR =
             DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.FRENCH);
 
-    // Define formatter for month and day only, with default year 1900
     private static final DateTimeFormatter MONTH_DAY_FORMATTER =
             new DateTimeFormatterBuilder()
                     .appendPattern("MMMM d")
                     .parseDefaulting(ChronoField.YEAR, 1900)
                     .toFormatter(Locale.ENGLISH);
 
-    // Define formatter for month and year only, with default day 1
     private static final DateTimeFormatter MONTH_YEAR_FORMATTER =
             new DateTimeFormatterBuilder()
                     .appendPattern("MMMM yyyy")
                     .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
                     .toFormatter(Locale.ENGLISH);
+    
+    
+    /**
+     * Parse chaîne de date en  objet LocalDate.
+     *
+     * La méthode tente de parser la dateString donnée en utilisant divers formats de date :
+ 
+     * 		Format d'année seule (par exemple, "1990") avec défaut au 1er janvier.
+     * 		Formats de date complète en anglais (par exemple, "June 15 1990") et en français (par exemple, "15 juin 1990").
+     * 		Format mois et jour seulement (par exemple, "June 15") avec année par défaut 1900.
+     * 		Format mois et année seulement (par exemple, "June 1990") avec jour par défaut 1.
+     *
+     * Si dateString n'est pas une date valide, alors message d'erreur et retourne  null.
+     *
+     * @param dateString La chaîne de date à parser.
+     * @return La date parsée en tant qu'objet LocalDate, ou null si le parsing échoue.
+     */
 
     public static LocalDate parseDate(String dateString) {
         if (dateString == null || dateString.trim().isEmpty()) {
             return null;
         }
 
-        // Remove any "c." prefix
+        // Supprime les  "c."
         dateString = dateString.trim().replaceAll("^c\\.\\s*", "");
 
         if (dateString.matches("^\\d+$")) {
             try {
-                // Attempt to parse as a year-only date
                 int year = Integer.parseInt(dateString);
-                // Assume January 1st of the given year
                 return LocalDate.of(year, 1, 1);
             } catch (NumberFormatException e) {
-                // Handle the case where dateString is not a valid number
                 System.err.println("Invalid year format: " + dateString);
-                return null;  // or throw an exception
+                return null;  
             }
         }
 
-        // Create a list of potential formatters
         List<DateTimeFormatter> formatters = new ArrayList<>();
         formatters.add(YEAR_ONLY_FORMATTER);
         formatters.add(FULL_DATE_FORMATTER_EN);
@@ -69,29 +85,17 @@ public class DateUtil {
         formatters.add(MONTH_DAY_FORMATTER);
         formatters.add(MONTH_YEAR_FORMATTER);
 
-        // Try each formatter until one succeeds
         for (DateTimeFormatter formatter : formatters) {
             try {
                 return LocalDate.parse(dateString, formatter);
             } catch (DateTimeParseException e) {
-                // Ignore and try the next formatter
             }
         }
 
-        // If all parsing attempts fail, log an error or handle it
         System.err.println("Unable to parse date: " + dateString);
-        return null;  // or throw an exception
+        return null;  
     }
-//
-//    public static void main(String[] args) {
-//        // Testing the parseDate method
-//        System.out.println(parseDate("2000"));  // Parses as January 1, 2000
-//        System.out.println(parseDate("January 1 2000"));  // Parses as January 1, 2000
-//        System.out.println(parseDate("25 December 1990"));  // Parses as December 25, 1990
-//        System.out.println(parseDate("1 October"));  // Parses as October 1, current year
-//        System.out.println(parseDate("c. 1985"));  // Parses as 1985
-//        System.out.println(parseDate("1"));  // Parses as January 1, current year
-//    }
+
 }
 
 

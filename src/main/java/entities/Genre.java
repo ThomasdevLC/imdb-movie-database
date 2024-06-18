@@ -10,25 +10,38 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-
+/**
+ * Classe  représentant un genre.
+ */
 @Entity
 @Table(name = "genre")
 public class Genre {
+    /** Identifiant unique du genre. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	/** Le nom du genre. */
 	private String name;
 
+	 /** 
+     * Liste des films associés à ce genre.
+     */
 	@ManyToMany
 	@JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "id_genre", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"))
 	private List<Movie> movies;
 
+	  /**
+     * Constructeur pour créer un nouvel objet Genre avec le nom donné.
+     * @param name Le nom du genre.
+     */
 	public Genre(String name) {
 		super();
 		this.name = name;
 	}
-
+	 /**
+     * Constructeur par défaut.
+     */
 	public Genre() {
 		super();
 	}

@@ -9,29 +9,50 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**
+ * Classe  représentant un pays.
+ */
 @Entity
 @Table(name = "country")
 public class Country {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String name;
-	
-	@OneToMany(mappedBy = "country")
-	private List<Movie> movies;
-	
-	@OneToMany(mappedBy = "country")
-	private List<Place> places;
+    
+    /** Identifiant unique du pays. */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    
+    /** Le nom du pays. */
+    private String name;
+    
+    /** 
+     * Liste des films associés à ce pays.
+     */
+    @OneToMany(mappedBy = "country")
+    private List<Movie> movies;
+    
+    /** 
+     * Liste des lieux associés à ce pays.
+     *  représente une relation de un à plusieurs avec les lieux où ce pays est référencé.
+     */
+    @OneToMany(mappedBy = "country")
+    private List<Place> places;
 
-	public Country(String name) {
-		super();
-		this.name = name;
-	}
+    /**
+     * Constructeur pour créer un nouvel objet Country avec le nom donné.
+     * @param name Le nom du pays.
+     */
+    public Country(String name) {
+        super();
+        this.name = name;
+    }
 
-	public Country() {
-		super();
-	}
-
+    /**
+     * Constructeur par défaut.
+     */
+    public Country() {
+        super();
+    }
+    
 	/**
 	 * @return the id
 	 */

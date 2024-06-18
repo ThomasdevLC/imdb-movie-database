@@ -1,47 +1,44 @@
 package utils;
 
+/**
+ * Classe utilitaire pour le traitement des tailles des acteurs.
+ * Classe permet de convertir une chaîne représentant une taille en mètres en un nombre double.
+ * Utilisé dans la classe {@link ActorCsvReader} pour extraire et traiter les données des acteurs.
+ */
+
 public class ActorHeightParserUtil {
 
-    /**
-     * Parses a height string to a double, handling specific formats.
-     *
-     * @param heightStr The height string to parse.
-     * @return The parsed height as a double in meters, or 0.0 if parsing fails.
-     */
+	/**
+	 * Converti et formate la taille (height) de string à double. 
+	 * Importé et 
+	 *
+	 * @param heightStr taille de l'acteur à convertir. 
+	 * 
+	 * 		Les caractères d'espacement sont remplacés par des espaces normaux.
+	 *      Les virgules sont converties en points
+	 *      Les caractères non numériques et non des points sont supprimés.
+	 *                  
+	 * @return La taille convertie en type double , ou 0.0 si la conversion a
+	 *         echouée.
+	 */
 	public static double parseHeight(String heightStr) {
-	    if (heightStr == null || heightStr.trim().isEmpty()) {
-	        return 0.0;
-	    }
+		if (heightStr == null || heightStr.trim().isEmpty()) {
+			return 0.0;
+		}
 
-	    // Remove any non-breaking space characters (like ' ')
-	    heightStr = heightStr.replace("\u202F", " ");
+		heightStr = heightStr.replace("\u202F", " ");
+		heightStr = heightStr.replace(",", ".");
+		heightStr = heightStr.replaceAll("[^\\d.]", "");
 
-	    // Convert commas to dots for decimal separation consistency
-	    heightStr = heightStr.replace(",", ".");
+		if (!heightStr.isEmpty()) {
+			try {
+				return Double.parseDouble(heightStr);
+			} catch (NumberFormatException e) {
+				System.err.println("Unable to parse height: " + heightStr);
+			}
+		}
 
-	    // Remove unwanted characters (non-numeric, non-dot)
-	    heightStr = heightStr.replaceAll("[^\\d.]", "");
-
-	    // Check if the string is now a valid numeric format
-	    if (!heightStr.isEmpty()) {
-	        try {
-	            // Parse as double
-	            return Double.parseDouble(heightStr);
-	        } catch (NumberFormatException e) {
-	            System.err.println("Unable to parse height: " + heightStr);
-	        }
-	    }
-
-	    // Return 0.0 if parsing fails or format doesn't match
-	    System.err.println("Invalid height format: " + heightStr);
-	    return 0.0;
+		System.err.println("Invalid height format: " + heightStr);
+		return 0.0;
 	}
-	  public static void main(String[] args) {
-	        // Test parsing height
-	        String heightStr = "6′ 2½″ (1.89 m)";
-	        double height = parseHeight(heightStr);
-	        System.out.println("Parsed height: " + height + " meters");
-	    }
-
 }
-

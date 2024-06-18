@@ -14,35 +14,79 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
+/**
+ * Classe  représentant un acteur.
+ */
 @Entity
 @Table(name = "actor")
 public class Actor {
 
+	/**
+	 * Identifiant unique de l'acteur dans la base de données.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	/**
+	 * Identifiant de l'acteur
+	 */
 	@Column(name = "id_actor")
 	private String idActor;
+
+	/**
+	 * Nom de l'acteur.
+	 */
 	private String name;
+
+	/**
+	 * Date de naissance de l'acteur.
+	 */
 	@Column(name = "birth_date")
 	private LocalDate birthDate;
-//	@Column(name = "birth_place")
+
+	/**
+	 * Lieu de naissance de l'acteur.
+	 */
+
 	@ManyToOne
 	@JoinColumn(name = "id_place")
 	private Place birthPlace;
+
+	/**
+	 * Taille de l'acteur en mètres.
+	 */
 	private double height;
+
+	/**
+	 * URL de  de la page web de l'acteur.
+	 */
 	private String url;
 
+	/**
+	 * Liste des rôles joués par l'acteur.
+	 */
 	@ManyToMany
 	@JoinTable(name = "actor_role", joinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id_actor"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id_role"))
 	private List<Role> roles;
 
+	/**
+	 * Liste des films dans lesquels l'acteur a joué.
+	 */
 	@ManyToMany
 	@JoinTable(name = "movie_actor", joinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id_actor"), inverseJoinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"))
 	private List<Movie> movies;
 
+	/**
+	 * Constructeur de la classe Actor.
+	 *
+	 * @param idActor    Identifiant de l'acteur
+	 * @param name       Nom de l'acteur
+	 * @param birthDate  Date de naissance de l'acteur
+	 * @param birthPlace Lieu de naissance de l'acteur
+	 * @param height     Taille de l'acteur
+	 * @param url        URL de l'acteur
+	 */
 	public Actor(String idActor, String name, LocalDate birthDate, Place birthPlace, Double height, String url) {
 		super();
 		this.idActor = idActor;
@@ -54,15 +98,11 @@ public class Actor {
 		this.roles = new ArrayList<>();
 		this.movies = new ArrayList<>();
 	}
-	
-	
 
 	public Actor() {
 		super();
-		
+
 	}
-
-
 
 	/**
 	 * @return the id
