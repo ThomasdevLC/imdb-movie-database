@@ -30,15 +30,15 @@ public class UserInterface {
     public void displayMenu() {
         System.out.println("");
         System.out.println("Choisissez une option:");
-        System.out.println("1. Trouver des films par le nom de l'acteur");
-        System.out.println("2. Trouver des acteurs par le nom du film");
-        System.out.println("3. Trouver des films sortis entre deux années");
-        System.out.println("4. Trouver des films communs à deux acteurs");
-        System.out.println("5. Trouver des acteurs communs à deux films");
-        System.out.println("6. Trouver des films d'un acteur sortis entre deux années");
-        System.out.println("7. Trouver des films par le nom d'un réalisateur ");
+        System.out.println("1. Filmographie d’un acteur ");
+        System.out.println("2. Casting d’un film donné");
+        System.out.println("3. Films sortis entre 2 années ");
+        System.out.println("4. Films communs à 2 acteurs/actrices donné");
+        System.out.println("5. Acteurs communs à 2 films donnés");
+        System.out.println("6. Films d'un acteur sortis entre deux années");
+        System.out.println("7. Films d'un réalisateur ");
 
-        System.out.println("0. Quitter");
+        System.out.println("8. Quitter");
     }
 
     public void userSelection() {
@@ -140,14 +140,14 @@ public class UserInterface {
                     }
                     break;
                     
-                case 0:
-                    System.out.println("Quitter l'application.");
+                case 8:
+                    System.out.println("Application quittée");
                     break;
 
                 default:
                     System.out.println("Option non valide.");
             }
-        } while (option != 0);
+        } while (option != 8);
 
         em.close();
         emf.close();
