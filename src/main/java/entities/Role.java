@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
  * Classe  représentant un rôle.
  */
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class Role {
 
 	@Id

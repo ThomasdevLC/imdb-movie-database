@@ -36,7 +36,7 @@ public class MovieCsvReader {
 			Path path = CsvFileUtil.getPath(fileName);
 
 			List<String> allLines = Files.readAllLines(path);
-			List<String> dataLines = allLines.subList(1, Math.min(3001, allLines.size()));
+			List<String> dataLines = allLines.subList(1, allLines.size());
 
 			em.getTransaction().begin();
 
@@ -48,6 +48,7 @@ public class MovieCsvReader {
                 int year = MovieYearParserUtil.parseYear(col[2].trim()); 
 				double rating = MovieRatingParserUtil.parseRating(col[3].trim());
 				String url = col[4].trim();
+				String shootingLocation = col[5].trim();
 				String genreString = col[6].trim();
 				String languageName = col[7].trim();
 				String synopsis = col.length > 8 ? col[8].trim() : "";
@@ -60,7 +61,7 @@ public class MovieCsvReader {
 
 				Language language = MovieCheckDatabaseUtils.findOrCreateLanguage(em, languageName);
 
-				Movie movie = new Movie(idMovie, name, year, rating, url, language, synopsis, country);
+				Movie movie = new Movie(idMovie, name, year, rating, url,shootingLocation, language, synopsis, country);
 				em.persist(movie);
 
 				List<String> genreNames = Arrays.asList(genreString.split(","));

@@ -7,8 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -17,8 +15,8 @@ import jakarta.persistence.Table;
  * Classe  représentant un lieu.
  */
 @Entity
-@Table(name = "place")
-public class Place {
+@Table(name = "birth_place")
+public class BirthPlace {
     /** Identifiant unique du lieu. */
 
 	@Id
@@ -32,15 +30,9 @@ public class Place {
      *  Pays associé à ce lieu.
      */
 	@ManyToOne
-	@JoinColumn(name = "id_country")
-	private Country country;
+	@JoinColumn(name = "id_country_birthplace")
+	private CountryBirthPlace countryBirthPlace;
 
-	 /** 
-     * Liste des films associés à ce lieu.
-     */
-	@ManyToMany
-	@JoinTable(name = "movie_place", joinColumns = @JoinColumn(name = "id_place", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"))
-	private List<Movie> movies;
 	
 	 /** 
      * Liste des réalisateurs associés à ce lieu.
@@ -61,17 +53,17 @@ public class Place {
      * @param country Le nom du pays.
 
      */
-	public Place(String city, String state, Country country) {
+	public BirthPlace(String city, String state, CountryBirthPlace countryBirthPlace) {
 		super();
 		this.city = city;
 		this.state = state;
-		this.country = country;
+		this.countryBirthPlace = countryBirthPlace;
 	}
 	
 	/**
      * Constructeur par défaut.
      */
-	public Place() {
+	public BirthPlace() {
 		super();
 	}
 
@@ -99,16 +91,11 @@ public class Place {
 	/**
 	 * @return the country
 	 */
-	public Country getCountry() {
-		return country;
+	public CountryBirthPlace getCountry() {
+		return countryBirthPlace;
 	}
 
-	/**
-	 * @return the movies
-	 */
-	public List<Movie> getMovies() {
-		return movies;
-	}
+
 
 	/**
 	 * @return the directors
@@ -141,16 +128,10 @@ public class Place {
 	/**
 	 * @param country the country to set
 	 */
-	public void setCountry(Country country) {
-		this.country = country;
+	public void setCountry(CountryBirthPlace countryBirthPlace) {
+		this.countryBirthPlace = countryBirthPlace;
 	}
 
-	/**
-	 * @param movies the movies to set
-	 */
-	public void setMovies(List<Movie> movies) {
-		this.movies = movies;
-	}
 
 	/**
 	 * @param directors the directors to set
@@ -159,24 +140,23 @@ public class Place {
 		this.directors = directors;
 	}
 
-	@Override
-	public String toString() {
-		return "Place [id=" + id + ", state=" + state + ", city=" + city + ", country=" + country + ", movies="
-				+ movies + ", directors=" + directors + "]";
-	}
-
 	/**
 	 * @return the actors
 	 */
 	public List<Actor> getActors() {
 		return actors;
 	}
-
+	
 	/**
 	 * @param actors the actors to set
 	 */
 	public void setActors(List<Actor> actors) {
 		this.actors = actors;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Place [id=" + id + ", state=" + state + ", city=" + city + ", country=" + countryBirthPlace + 
+				 ", directors=" + directors + "]";
+	}
 }

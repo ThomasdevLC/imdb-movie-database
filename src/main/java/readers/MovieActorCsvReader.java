@@ -38,10 +38,8 @@ public class MovieActorCsvReader {
                 String idMovie = col[0].trim();
                 String idActor = col[1].trim();
 
-                // Créer MovieActor avec les IDs
                 MovieActor movieActor = new MovieActor(idMovie, idActor);
 
-                // Persister MovieActor
                 em.persist(movieActor);
 
                 System.out.println(" actor " + idActor + " movie " + idMovie);

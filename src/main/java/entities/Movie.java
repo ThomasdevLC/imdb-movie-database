@@ -32,6 +32,7 @@ public class Movie {
 	private int year;
 	private double rating;
 	private String url;
+	private String shootingLocation;
 	@ManyToOne
 	@JoinColumn(name = "id_language")
 	private Language language;
@@ -50,11 +51,6 @@ public class Movie {
 	@ManyToMany
 	@JoinTable(name = "movie_role", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id_role"))
 	private List<Role> roles;
-
-	/** Liste des lieux associés au film. */
-	@ManyToMany
-	@JoinTable(name = "movie_place", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_place", referencedColumnName = "id"))
-	private List<Place> places;
 
 	/** Liste des acteurs dans le film. */
 	@ManyToMany
@@ -78,7 +74,7 @@ public class Movie {
 	 * @param synopsis Synopsis du film.
 	 * @param country  Pays d'origine du film.
 	 */
-	public Movie(String idMovie, String name, int year, double rating, String url, Language language, String synopsis,
+	public Movie(String idMovie, String name, int year, double rating, String url,String shootingLocation, Language language, String synopsis,
 			Country country) {
 		super();
 		this.idMovie = idMovie;
@@ -86,11 +82,11 @@ public class Movie {
 		this.year = year;
 		this.rating = rating;
 		this.url = url;
+		this.shootingLocation=shootingLocation;
 		this.language = language;
 		this.synopsis = synopsis;
 		this.country = country;
 		this.genres = new ArrayList<>();
-		this.places = new ArrayList<>();
 
 	}
 
@@ -179,13 +175,6 @@ public class Movie {
 	}
 
 	/**
-	 * @return the places
-	 */
-	public List<Place> getPlaces() {
-		return places;
-	}
-
-	/**
 	 * @return the actors
 	 */
 	public List<Actor> getActors() {
@@ -269,12 +258,6 @@ public class Movie {
 		this.roles = roles;
 	}
 
-	/**
-	 * @param places the places to set
-	 */
-	public void setPlaces(List<Place> places) {
-		this.places = places;
-	}
 
 	/**
 	 * @param actors the actors to set
@@ -290,12 +273,41 @@ public class Movie {
 		return directors;
 	}
 
+	/**
+	 * @return the shootingLocation
+	 */
+	public String getShootingLocation() {
+		return shootingLocation;
+	}
+
+	/**
+	 * @return the directors
+	 */
+	public List<Director> getDirectors() {
+		return directors;
+	}
+
+	/**
+	 * @param shootingLocation the shootingLocation to set
+	 */
+	public void setShootingLocation(String shootingLocation) {
+		this.shootingLocation = shootingLocation;
+	}
+
+	/**
+	 * @param directors the directors to set
+	 */
+	public void setDirectors(List<Director> directors) {
+		this.directors = directors;
+	}
+
 	@Override
 	public String toString() {
 		return "Movie [id=" + id + ", idMovie=" + idMovie + ", name=" + name + ", year=" + year + ", rating=" + rating
-				+ ", url=" + url + ", language=" + language + ", synopsis=" + synopsis + ", country=" + country
-				+ ", genres=" + genres + ", roles=" + roles + ", places=" + places + ", directors=" + directors
-				+ ", actors=" + actors + "]";
+				+ ", url=" + url + ", shootingLocation=" + shootingLocation + ", language=" + language + ", synopsis="
+				+ synopsis + ", country=" + country + ", genres=" + genres + ", roles=" + roles + ", actors=" + actors
+				+ ", directors=" + directors + "]";
 	}
-
+	
+	
 }

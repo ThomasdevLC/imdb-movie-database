@@ -10,49 +10,43 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
- * Classe  représentant un pays.
+ * Classe représentant un pays.
  */
 @Entity
 @Table(name = "country")
 public class Country {
-    
-    /** Identifiant unique du pays. */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
-    /** Le nom du pays. */
-    private String name;
-    
-    /** 
-     * Liste des films associés à ce pays.
-     */
-    @OneToMany(mappedBy = "country")
-    private List<Movie> movies;
-    
-    /** 
-     * Liste des lieux associés à ce pays.
-     *  représente une relation de un à plusieurs avec les lieux où ce pays est référencé.
-     */
-    @OneToMany(mappedBy = "country")
-    private List<Place> places;
 
-    /**
-     * Constructeur pour créer un nouvel objet Country avec le nom donné.
-     * @param name Le nom du pays.
-     */
-    public Country(String name) {
-        super();
-        this.name = name;
-    }
+	/** Identifiant unique du pays. */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    /**
-     * Constructeur par défaut.
-     */
-    public Country() {
-        super();
-    }
-    
+	/** Le nom du pays. */
+	private String name;
+
+	/**
+	 * Liste des films associés à ce pays.
+	 */
+	@OneToMany(mappedBy = "country")
+	private List<Movie> movies;
+
+	/**
+	 * Constructeur pour créer un nouvel objet Country avec le nom donné.
+	 * 
+	 * @param name Le nom du pays.
+	 */
+	public Country(String name) {
+		super();
+		this.name = name;
+	}
+
+	/**
+	 * Constructeur par défaut.
+	 */
+	public Country() {
+		super();
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -72,13 +66,6 @@ public class Country {
 	 */
 	public List<Movie> getMovies() {
 		return movies;
-	}
-
-	/**
-	 * @return the places
-	 */
-	public List<Place> getPlaces() {
-		return places;
 	}
 
 	/**
@@ -102,17 +89,9 @@ public class Country {
 		this.movies = movies;
 	}
 
-	/**
-	 * @param places the places to set
-	 */
-	public void setPlaces(List<Place> places) {
-		this.places = places;
-	}
-
 	@Override
 	public String toString() {
-		return "Country [id=" + id + ", name=" + name + ", movies=" + movies + ", places=" + places + "]";
+		return "Country [id=" + id + ", name=" + name + ", movies=" + movies + "]";
 	}
-	
 
 }

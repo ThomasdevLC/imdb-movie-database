@@ -4,6 +4,7 @@ import readers.DirectorCsvReader;
 import readers.ActorCsvReader;
 import readers.MovieActorCsvReader;
 import readers.MovieDirectorCsvReader;
+import readers.RoleCsvReader;
 import readers.MovieCsvReader;
 
 /**
@@ -18,10 +19,11 @@ public class CsvExtractionsManager {
      */
 	public static void extractAll() {
         CountryCsvReader.extractCountries();
-        DirectorCsvReader.extractDirectors();
         ActorCsvReader.extractActors();
+        DirectorCsvReader.extractDirectors();
         MovieActorCsvReader.extractMovieActors();
         MovieDirectorCsvReader.extractMovieDirectors();
+        RoleCsvReader.extractRoles();
         MovieCsvReader.extractMovies();
     }
 

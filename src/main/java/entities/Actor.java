@@ -51,7 +51,7 @@ public class Actor {
 
 	@ManyToOne
 	@JoinColumn(name = "id_place")
-	private Place birthPlace;
+	private BirthPlace birthPlace;
 
 	/**
 	 * Taille de l'acteur en mètres.
@@ -87,7 +87,7 @@ public class Actor {
 	 * @param height     Taille de l'acteur
 	 * @param url        URL de l'acteur
 	 */
-	public Actor(String idActor, String name, LocalDate birthDate, Place birthPlace, Double height, String url) {
+	public Actor(String idActor, String name, LocalDate birthDate, BirthPlace birthPlace, Double height, String url) {
 		super();
 		this.idActor = idActor;
 		this.name = name;
@@ -135,7 +135,7 @@ public class Actor {
 	/**
 	 * @return the birthPlace
 	 */
-	public Place getBirthPlace() {
+	public BirthPlace getBirthPlace() {
 		return birthPlace;
 	}
 
@@ -198,7 +198,7 @@ public class Actor {
 	/**
 	 * @param birthPlace the birthPlace to set
 	 */
-	public void setBirthPlace(Place birthPlace) {
+	public void setBirthPlace(BirthPlace birthPlace) {
 		this.birthPlace = birthPlace;
 	}
 

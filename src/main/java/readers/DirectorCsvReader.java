@@ -12,8 +12,8 @@ import utils.CsvFileUtil;
 import utils.PlaceCheckDatabaseUtil;
 import utils.PlaceFormatterUtils;
 import utils.DateUtil;
+import entities.BirthPlace;
 import entities.Director;
-import entities.Place;
 /**
  * classe lit un fichier CSV contenant des noms de réalisateurs et les persiste en base
  * de données.
@@ -58,10 +58,8 @@ public class DirectorCsvReader {
 			            countryName = PlaceFormatterUtils.processCountryName(placeDetails[1].trim());
 			        }
 
-				System.out.println("Pays: " + countryName);
 
-
-				Place birthPlace = PlaceCheckDatabaseUtil.findOrCreatePlace(em, city, state, countryName);
+				BirthPlace birthPlace = PlaceCheckDatabaseUtil.findOrCreatePlace(em, city, state, countryName);
 
 				Director director = new Director(idDirector, name, birthDate, birthPlace, url);
 				em.persist(director);

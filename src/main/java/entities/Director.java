@@ -37,8 +37,8 @@ public class Director {
 	
     /** Lieu de naissance du réalisateur. */
 	@ManyToOne
-	@JoinColumn(name = "id_place")
-	private Place birthPlace;
+	@JoinColumn(name = "id_birthplace")
+	private BirthPlace birthPlace;
 	
     /** URL de la page web du du réalisateur. */
 	private String url;
@@ -57,7 +57,7 @@ public class Director {
      * @param birthPlace Lieu de naissance du réalisateur.
      * @param url URL de la page web ou du profil du réalisateur.
      */
-	public Director(String idDirector, String name, LocalDate birthDate, Place birthPlace, String url) {
+	public Director(String idDirector, String name, LocalDate birthDate, BirthPlace birthPlace, String url) {
 		super();
 		this.idDirector = idDirector;
 		this.name = name;
@@ -105,7 +105,7 @@ public class Director {
 	/**
 	 * @return the birthPlace
 	 */
-	public Place getBirthPlace() {
+	public BirthPlace getBirthPlace() {
 		return birthPlace;
 	}
 
@@ -154,7 +154,7 @@ public class Director {
 	/**
 	 * @param birthPlace the birthPlace to set
 	 */
-	public void setBirthPlace(Place birthPlace) {
+	public void setBirthPlace(BirthPlace birthPlace) {
 		this.birthPlace = birthPlace;
 	}
 

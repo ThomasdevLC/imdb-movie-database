@@ -1,8 +1,8 @@
 package utils;
 
 import jakarta.persistence.EntityManager;
-import entities.Country;
-import entities.Place;
+import entities.CountryBirthPlace;
+import entities.BirthPlace;
 /**
  * Classe utilitaire pour la gestion de recherche ou création d'entités Place et Country
  * dans la table de données des réalisateurs.
@@ -22,8 +22,8 @@ public class PlaceCheckDatabaseUtil {
      * @return L'entité Place qui existe déjà ou nouvellement créé.
      */
 
-	public static Place findOrCreatePlace(EntityManager em, String state, String city, String countryName) {
-	    Place place = em.createQuery("SELECT p FROM Place p WHERE p.city = :city AND p.state = :state", Place.class)
+	public static BirthPlace findOrCreatePlace(EntityManager em, String state, String city, String countryName) {
+		BirthPlace birthPlace = em.createQuery("SELECT p FROM BirthPlace p WHERE p.city = :city AND p.state = :state", BirthPlace.class)
 	            .setParameter("city", city)
 	            .setParameter("state", state)
 	            .getResultList()
@@ -31,17 +31,17 @@ public class PlaceCheckDatabaseUtil {
 	            .findFirst()
 	            .orElse(null);
 
-	    if (place == null) {
+	    if (birthPlace == null) {
 	        if (countryName != null) {
-	            Country country = findOrCreateCountry(em, countryName);
-	            place = new Place(state, city, country);
+	        	CountryBirthPlace countryBirthPlace = findOrCreateCountry(em, countryName);
+	            birthPlace = new BirthPlace(state, city, countryBirthPlace);
 	        } else {
-	            place = new Place(state, city, null); 
+	            birthPlace = new BirthPlace(state, city, null); 
 	        }
-	        em.persist(place);
+	        em.persist(birthPlace);
 	    }
 
-	    return place;
+	    return birthPlace;
 	}
 
 	 /**
@@ -52,19 +52,19 @@ public class PlaceCheckDatabaseUtil {
      * @return L'entité Country qui existe déjà ou nouvellement créée .
      */
 	
-    public static Country findOrCreateCountry(EntityManager em, String countryName) {
-        Country country = em.createQuery("SELECT c FROM Country c WHERE c.name = :name", Country.class)
+    public static CountryBirthPlace findOrCreateCountry(EntityManager em, String countryName) {
+    	CountryBirthPlace countryBirthPlace = em.createQuery("SELECT c FROM CountryBirthPlace c WHERE c.name = :name", CountryBirthPlace.class)
                 .setParameter("name", countryName)
                 .getResultList()
                 .stream()
                 .findFirst()
                 .orElse(null);
 
-        if (country == null) {
-            country = new Country(countryName);
-            em.persist(country);
+        if (countryBirthPlace == null) {
+        	countryBirthPlace = new CountryBirthPlace(countryName);
+            em.persist(countryBirthPlace);
         }
 
-        return country;
+        return countryBirthPlace;
     }
 }
