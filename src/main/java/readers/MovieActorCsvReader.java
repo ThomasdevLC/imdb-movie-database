@@ -16,7 +16,7 @@ import utils.CsvFileUtil;
  */
 public class MovieActorCsvReader {
 
-    public void extractMovieActors() {
+    public static void extractMovieActors() {
     	
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_database");
         EntityManager em = emf.createEntityManager();

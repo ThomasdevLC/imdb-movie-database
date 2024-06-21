@@ -16,7 +16,7 @@ public class MovieDirectorCsvReader {
 	 * classe lit un fichier CSV contenant des noms de films liés à leurs realisteurs  et les persiste en base
 	 * de données.
 	 */
-	public void extractMovieDirectors() {
+	public static void extractMovieDirectors() {
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_database");
 		EntityManager em = emf.createEntityManager();

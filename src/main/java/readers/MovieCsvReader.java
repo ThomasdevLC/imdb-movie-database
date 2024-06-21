@@ -24,7 +24,7 @@ import utils.MovieYearParserUtil;
  */
 public class MovieCsvReader {
 
-	public  void extractMovies() {
+	public static void extractMovies() {
 		EntityManagerFactory emf = null;
 		EntityManager em = null;
 

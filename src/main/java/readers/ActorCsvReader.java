@@ -24,7 +24,7 @@ import utils.ActorHeightParserUtil;
 
 public class ActorCsvReader {
 	
-	public void extractActors() {
+	public static void extractActors() {
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_database");
 		EntityManager em = emf.createEntityManager();

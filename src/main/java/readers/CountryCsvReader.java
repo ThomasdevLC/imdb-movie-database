@@ -19,7 +19,7 @@ import entities.Country;
  */
 public class CountryCsvReader {
 
-	public void extractCountries() {
+	public static void extractCountries() {
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_database");
 		EntityManager em = emf.createEntityManager();

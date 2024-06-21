@@ -20,7 +20,7 @@ import entities.Place;
  */
 public class DirectorCsvReader {
 
-	public  void extractDirectors() {
+	public static void extractDirectors() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_database");
 		EntityManager em = emf.createEntityManager();
 
