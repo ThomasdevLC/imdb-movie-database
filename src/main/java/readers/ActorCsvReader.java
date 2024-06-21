@@ -6,14 +6,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
-
 import entities.Actor;
 import entities.Place;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import utils.CsvFileUtil;
-import utils.DirectorCheckDatabaseUtil;
+import utils.PlaceCheckDatabaseUtil;
+import utils.PlaceFormatterUtils;
 import utils.DateUtil;
 import utils.ActorHeightParserUtil;
 
@@ -50,12 +50,26 @@ public class ActorCsvReader {
                 double height = ActorHeightParserUtil.parseHeight(heightStr);
 				String url = col[5].trim();
 
-				String[] placeDetails = placeInfo.split(",\\s*", 3);
-				String city = placeDetails[0].trim();
-				String state = (placeDetails.length > 1 && !placeDetails[1].isEmpty()) ? placeDetails[1].trim() : null;
-				String countryName = (placeDetails.length > 2) ? placeDetails[2].trim() : null;
+				  String[] placeDetails = placeInfo.split(",\\s*", 3);
+			        String city = null;
+			        String state = null;
+			        String countryName = null;
 
-				Place birthPlace = DirectorCheckDatabaseUtil.findOrCreatePlace(em, state, city, countryName);
+			        if (placeDetails.length == 3) {
+			            city = placeDetails[0].trim();
+			            state = placeDetails[1].trim();
+			            countryName = PlaceFormatterUtils.processCountryName(placeDetails[2].trim());
+			        } else if (placeDetails.length == 2) {
+			            city = placeDetails[0].trim();
+			            countryName = PlaceFormatterUtils.processCountryName(placeDetails[1].trim());
+			        }
+
+
+
+				System.out.println("Pays: " + countryName);
+
+
+				Place birthPlace = PlaceCheckDatabaseUtil.findOrCreatePlace(em, state, city, countryName);
 
 				Actor actor = new Actor(idActor, name, birthDate, birthPlace,height, url);
 				em.persist(actor);

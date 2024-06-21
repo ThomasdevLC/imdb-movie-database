@@ -25,7 +25,7 @@ Développer une application pour :
 Parser les fichiers CSV (ou JSON avec Jackson) et insérer les données en base de données (utilisant JPA).
 Fournir un menu interactif pour extraire des informations spécifiques.
 
-##Exigences du projet
+## Exigences du projet
 Exigence n°1 : Qualité de code
 Documenter le code avec Javadoc.
 Structurer le code de manière modulaire et claire.
@@ -34,7 +34,7 @@ Utiliser des classes pour les données telles que Lieu de naissance, pays, langu
 Assurer l'unicité pour les lieux de naissance, pays, langues et genres.
 Utiliser les types appropriés pour les dates (LocalDate ou LocalDateTime en Java).
 
-##Utilisation du projet
+## Utilisation du projet
 Clonage du repository et importation dans un IDE
 Cloner le repository :
 
@@ -43,7 +43,7 @@ Importer le projet dans votre IDE :
 
 - IntelliJ IDEA :
 
-File > New > Project from Existing Sources...
+File > New > Project from Existing Sources.
 Sélectionnez le dossier racine du projet cloné.
 Choisissez "Import project from external model" et sélectionnez "Maven".
 Suivez les instructions pour importer le projet.
@@ -60,12 +60,12 @@ Extraction des données depuis les fichiers CSV :
 ### Extraction et Persistance des Données
 Pour **extraire et persister** toutes les données des fichiers CSV dans la base de données `movie_database`, suivez cette étape :
 
-exécutez la classe ``CsvExtractionManager`` qui se trouve dans le package readers.
+exécutez la classe ``CsvExtractionManager`` qui se trouve dans le `package readers`.
 
 
 ### Lancement de l'application de recherche :
 
-Pour **lancer l'application** avec le menu permettant à l'utilisateur de réaliser différentes recherches: exécutez la classe `UserInterface` située dans le package researchApp.
+Pour **lancer l'application** avec le menu permettant à l'utilisateur de réaliser différentes recherches: exécutez la classe `UserInterface` située dans le `package researchApp`.
 
 Fonctionnalités de l'application
 
@@ -83,7 +83,7 @@ L'application UserInterface propose un menu interactif permettant d'effectuer le
 
 6. Affichage des films sortis entre 2 années données et qui ont un acteur/actrice donné au casting
 
-7. Difficile : trouver le plus court chemin entre 2 acteurs (algorithme de la théorie des graphes à utiliser)
+7. Trouver le plus court chemin entre 2 acteurs (algorithme de la théorie des graphes à utiliser)
 
 8. Fin de l’application
 

@@ -9,7 +9,7 @@ import entities.Place;
  * Utilisé dans la classe {@link DirectorCsvReader} pour gérer les données relatives au lieu de naissance.
 
  */
-public class DirectorCheckDatabaseUtil {
+public class PlaceCheckDatabaseUtil {
 	
 	  /**
      * Recherche ou crée une entité Place dans la base de données en fonction de la ville (city), de l'état (state)

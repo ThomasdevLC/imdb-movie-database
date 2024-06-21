@@ -9,7 +9,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import utils.CsvFileUtil;
-import utils.DirectorCheckDatabaseUtil;
+import utils.PlaceCheckDatabaseUtil;
+import utils.PlaceFormatterUtils;
 import utils.DateUtil;
 import entities.Director;
 import entities.Place;
@@ -43,25 +44,24 @@ public class DirectorCsvReader {
 				String placeInfo = col[3].trim();
 				String url = col[4].trim();
 
-				String[] placeDetails = placeInfo.split(",\\s*", 3);
-				
-				String city = null;
-				String state = null;
-				String countryName = null;
+				  String[] placeDetails = placeInfo.split(",\\s*", 3);
+			        String city = null;
+			        String state = null;
+			        String countryName = null;
 
-				if (placeDetails.length == 3) {
-				    city = placeDetails[0].trim();
-				    state = placeDetails[1].trim();
-				    countryName = placeDetails[2].trim();
-				}
+			        if (placeDetails.length == 3) {
+			            city = placeDetails[0].trim();
+			            state = placeDetails[1].trim();
+			            countryName = PlaceFormatterUtils.processCountryName(placeDetails[2].trim());
+			        } else if (placeDetails.length == 2) {
+			            city = placeDetails[0].trim();
+			            countryName = PlaceFormatterUtils.processCountryName(placeDetails[1].trim());
+			        }
 
-				if (placeDetails.length == 2) {
-				    city = placeDetails[0].trim();
-				    countryName = placeDetails[1].trim();
-				}
+				System.out.println("Pays: " + countryName);
 
 
-				Place birthPlace = DirectorCheckDatabaseUtil.findOrCreatePlace(em, city, state, countryName);
+				Place birthPlace = PlaceCheckDatabaseUtil.findOrCreatePlace(em, city, state, countryName);
 
 				Director director = new Director(idDirector, name, birthDate, birthPlace, url);
 				em.persist(director);
