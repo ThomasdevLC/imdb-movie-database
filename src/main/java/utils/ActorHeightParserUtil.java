@@ -2,7 +2,7 @@ package utils;
 
 /**
  * Classe utilitaire pour le traitement des tailles des acteurs.
- * Classe permet de convertir une chaîne représentant une taille en mètres en un nombre double.
+ * Classe permet de convertir une chaîne représentant une taille en mètres en un nombre de type double.
  * Utilisé dans la classe {@link ActorCsvReader} pour extraire et traiter les données des acteurs.
  */
 
@@ -10,7 +10,6 @@ public class ActorHeightParserUtil {
 
 	/**
 	 * Converti et formate la taille (height) de string à double. 
-	 * Importé et 
 	 *
 	 * @param heightStr taille de l'acteur à convertir. 
 	 * 

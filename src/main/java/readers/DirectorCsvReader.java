@@ -64,7 +64,7 @@ public class DirectorCsvReader {
 				Director director = new Director(idDirector, name, birthDate, birthPlace, url);
 				em.persist(director);
 
-				System.out.println(" director: " + director.getName() );
+				System.out.println(" director: " + director.getName());
 
 			}
 

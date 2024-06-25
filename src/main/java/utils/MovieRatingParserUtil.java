@@ -22,10 +22,10 @@ public class MovieRatingParserUtil {
 			return 0.0;
 		}
 
-		String normalizedRatingStr = ratingStr.replace(',', '.');
+		String formatRatingStr = ratingStr.replace(',', '.');
 
 		try {
-			return Double.parseDouble(normalizedRatingStr);
+			return Double.parseDouble(formatRatingStr);
 		} catch (NumberFormatException e) {
 			System.err.println("Unable to parse rating: " + ratingStr);
 			return 0.0;

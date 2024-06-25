@@ -64,7 +64,7 @@ public class MovieCheckDatabaseUtils {
     /**
      * Recherche ou crée une entité Genre dans la table de données en fonction du nom du genre (genreName).
      *
-     * @param em        Le gestionnaire  EntityManager pour la persistance.
+     * @param em        Le gestionnaire EntityManager pour la persistance.
      * @param genreName Le nom du genre.
      * @return L'entité Genre qui existe déjà ou nouvellement créée .
      */

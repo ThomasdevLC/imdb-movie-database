@@ -32,6 +32,7 @@ public class Movie {
 	private int year;
 	private double rating;
 	private String url;
+	@Column(name = "shooting_location")
 	private String shootingLocation;
 	@ManyToOne
 	@JoinColumn(name = "id_language")
@@ -46,11 +47,6 @@ public class Movie {
 	@ManyToMany
 	@JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_genre", referencedColumnName = "id"))
 	private List<Genre> genres;
-
-	/** Liste des rôles dans le film. */
-	@ManyToMany
-	@JoinTable(name = "movie_role", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id_role"))
-	private List<Role> roles;
 
 	/** Liste des acteurs dans le film. */
 	@ManyToMany
@@ -167,12 +163,6 @@ public class Movie {
 		return genres;
 	}
 
-	/**
-	 * @return the roles
-	 */
-	public List<Role> getRoles() {
-		return roles;
-	}
 
 	/**
 	 * @return the actors
@@ -251,13 +241,6 @@ public class Movie {
 		this.genres = genres;
 	}
 
-	/**
-	 * @param roles the roles to set
-	 */
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
 
 	/**
 	 * @param actors the actors to set
@@ -305,8 +288,8 @@ public class Movie {
 	public String toString() {
 		return "Movie [id=" + id + ", idMovie=" + idMovie + ", name=" + name + ", year=" + year + ", rating=" + rating
 				+ ", url=" + url + ", shootingLocation=" + shootingLocation + ", language=" + language + ", synopsis="
-				+ synopsis + ", country=" + country + ", genres=" + genres + ", roles=" + roles + ", actors=" + actors
-				+ ", directors=" + directors + "]";
+				+ synopsis + ", country=" + country + ", genres=" + genres + ", actors=" + actors + ", directors="
+				+ directors + "]";
 	}
 	
 	

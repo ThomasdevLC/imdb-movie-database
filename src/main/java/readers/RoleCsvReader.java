@@ -29,7 +29,7 @@ public class RoleCsvReader {
 	            Path path = CsvFileUtil.getPath(fileName);
 
 	            List<String> allLines = Files.readAllLines(path);
-            List<String> dataLines = allLines.subList(1, Math.min(101, allLines.size())); 
+            List<String> dataLines = allLines.subList(1, Math.min(5001, allLines.size())); 
 //				List<String> dataLines = allLines.subList(1, allLines.size());
 
 	            for (String line : dataLines) {

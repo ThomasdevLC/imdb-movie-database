@@ -1,4 +1,5 @@
 package researchApp;
+
 import readers.CountryCsvReader;
 import readers.DirectorCsvReader;
 import readers.ActorCsvReader;
@@ -8,38 +9,30 @@ import readers.RoleCsvReader;
 import readers.MovieCsvReader;
 
 /**
- *  classe CsvExtractionManager gère l'extraction de données à partir de fichiers CSV pour les classes/entités :
- * pays, réalisateurs, acteurs, relations acteur_film, relations réalisateur_film et films.
+ * classe CsvExtractionManager gère l'extraction de données à partir de fichiers
+ * CSV pour les classes/entités : pays, réalisateurs, acteurs, relations
+ * acteur_film, relations réalisateur_film et films.
  */
 public class CsvExtractionsManager {
 
-	 /**
-     * Méthode  pour extraire toutes les données à partir des fichiers CSV.
-     * Appelle chaque lecteur CSV pour extraire les données et les persiste dans la base de données.
-     */
+	/**
+	 * Méthode pour extraire toutes les données à partir des fichiers CSV. Appelle
+	 * chaque lecteur CSV pour extraire les données et les persiste dans la base de
+	 * données.
+	 */
 	public static void extractAll() {
-        CountryCsvReader.extractCountries();
-        ActorCsvReader.extractActors();
-        DirectorCsvReader.extractDirectors();
-        MovieActorCsvReader.extractMovieActors();
-        MovieDirectorCsvReader.extractMovieDirectors();
-        RoleCsvReader.extractRoles();
-        MovieCsvReader.extractMovies();
-    }
+		CountryCsvReader.extractCountries();
+		ActorCsvReader.extractActors();
+		DirectorCsvReader.extractDirectors();
+		MovieCsvReader.extractMovies();
+		RoleCsvReader.extractRoles();
+		MovieActorCsvReader.extractMovieActors();
+		MovieDirectorCsvReader.extractMovieDirectors();
+	}
 
-    public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
+	public static void main(String[] args) {
 
-        extractAll();
+		extractAll();
 
-        long endTime = System.currentTimeMillis();
-        long executionTimeMillis = endTime - startTime;
-
-        long minutes = (executionTimeMillis / 1000) / 60;
-        long seconds = (executionTimeMillis / 1000) % 60;
-
-        System.out.println("Temps d'exécution total : " + minutes + " minutes et " + seconds + " secondes");
-    }
+	}
 }
-
-

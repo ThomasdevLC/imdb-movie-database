@@ -14,8 +14,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 /**
- * Classe  représentant un acteur.
+ * Classe représentant un acteur.
  */
 @Entity
 @Table(name = "actor")
@@ -59,16 +60,9 @@ public class Actor {
 	private double height;
 
 	/**
-	 * URL de  de la page web de l'acteur.
+	 * URL de de la page web de l'acteur.
 	 */
 	private String url;
-
-	/**
-	 * Liste des rôles joués par l'acteur.
-	 */
-	@ManyToMany
-	@JoinTable(name = "actor_role", joinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id_actor"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id_role"))
-	private List<Role> roles;
 
 	/**
 	 * Liste des films dans lesquels l'acteur a joué.
@@ -95,7 +89,6 @@ public class Actor {
 		this.birthPlace = birthPlace;
 		this.height = height;
 		this.url = url;
-		this.roles = new ArrayList<>();
 		this.movies = new ArrayList<>();
 	}
 
@@ -151,13 +144,6 @@ public class Actor {
 	 */
 	public String getUrl() {
 		return url;
-	}
-
-	/**
-	 * @return the roles
-	 */
-	public List<Role> getRoles() {
-		return roles;
 	}
 
 	/**
@@ -217,13 +203,6 @@ public class Actor {
 	}
 
 	/**
-	 * @param roles the roles to set
-	 */
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
-	/**
 	 * @param movies the movies to set
 	 */
 	public void setMovies(List<Movie> movies) {
@@ -233,8 +212,7 @@ public class Actor {
 	@Override
 	public String toString() {
 		return "Actor [id=" + id + ", idActor=" + idActor + ", name=" + name + ", birthDate=" + birthDate
-				+ ", birthPlace=" + birthPlace + ", height=" + height + ", url=" + url + ", roles=" + roles
-				+ ", movies=" + movies + "]";
+				+ ", birthPlace=" + birthPlace + ", height=" + height + ", url=" + url + ", movies=" + movies + "]";
 	}
 
 }

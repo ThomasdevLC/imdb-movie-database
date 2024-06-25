@@ -61,7 +61,7 @@ public class MovieCsvReader {
 
 				Language language = MovieCheckDatabaseUtils.findOrCreateLanguage(em, languageName);
 
-				Movie movie = new Movie(idMovie, name, year, rating, url,shootingLocation, language, synopsis, country);
+				Movie movie = new Movie(idMovie, name, year, rating, url, shootingLocation, language, synopsis, country);
 				em.persist(movie);
 
 				List<String> genreNames = Arrays.asList(genreString.split(","));

@@ -10,11 +10,11 @@ package utils;
 public class MovieYearParserUtil {
 
     /**
-     * Méthode sépare la chaîne en  (parts) et convertit en entier le dernier morceau(parts.length - 1).
+     * Méthode sépare la chaîne en morceau (parts) et convertit en entier le dernier morceau(parts.length - 1).
      *
      * @param yearStr l'année de type String.
      * @return L'année sous forme d'entier Integer.
-     * @throws NumberFormatException Si la chaîne ne contient pas de chiffres valides.
+     * 
      */
     public static int parseYear(String yearStr) {
         String[] parts = yearStr.split("\\D+");

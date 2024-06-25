@@ -60,7 +60,7 @@ Extraction des données depuis les fichiers CSV :
 ### Extraction et Persistance des Données
 Pour **extraire et persister** toutes les données des fichiers CSV dans la base de données `movie_database`, suivez cette étape :
 
-exécutez la classe ``CsvExtractionManager`` qui se trouve dans le `package readers`.
+exécutez la classe ``CsvExtractionManager`` qui se trouve dans le `package researchApp`.
 
 
 ### Lancement de l'application de recherche :
@@ -83,7 +83,7 @@ L'application UserInterface propose un menu interactif permettant d'effectuer le
 
 6. Affichage des films sortis entre 2 années données et qui ont un acteur/actrice donné au casting
 
-7. Trouver le plus court chemin entre 2 acteurs (algorithme de la théorie des graphes à utiliser)
+7. Affichage des films d'un réalisateur donné.
 
 8. Fin de l’application
 

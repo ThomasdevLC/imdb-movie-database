@@ -6,7 +6,7 @@ import entities.BirthPlace;
 /**
  * Classe utilitaire pour la gestion de recherche ou création d'entités Place et Country
  * dans la table de données des réalisateurs.
- * Utilisé dans la classe {@link DirectorCsvReader} pour gérer les données relatives au lieu de naissance.
+ * Utilisé dans la classe {@link DirectorCsvReader} {@link ActorCsvReader}  pour gérer les données relatives au lieu de naissance.
 
  */
 public class PlaceCheckDatabaseUtil {

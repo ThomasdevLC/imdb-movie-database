@@ -29,7 +29,7 @@ public class CsvFileUtil {
     /**
      * Vérifier si un fichier CSV existe dans les ressources.
      * @param fileName Le nom du fichier CSV.
-     * @return true si le fichier existe, false sinon.
+     * @return true si le fichier existe,  sinon false.
      */
     public static boolean fileExists(String fileName) {
         try {
